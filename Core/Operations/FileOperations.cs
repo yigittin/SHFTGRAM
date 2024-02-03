@@ -8,8 +8,8 @@ namespace SHFTGRAMAPP.Core.Operations
 {
     public static class FileOperations
     {
-        public static string Slider = "Sliders";
-        public static string Product = "Produtcs";
+        public static string Profile = "Profiles";
+        public static string Post= "Posts";
         
     }
 }

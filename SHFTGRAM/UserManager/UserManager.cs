@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication;
 using Service.Login;
 using Domain.User;
 using SHFTGRAMAPP.Core.Exceptions;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace SHFTGRAM.UserManager
 {
@@ -41,7 +42,6 @@ namespace SHFTGRAM.UserManager
                 try
                 {
                     await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
                 }
                 catch (Exception ex)
                 {
@@ -51,7 +51,7 @@ namespace SHFTGRAM.UserManager
             }
             else
             {
-                throw new CustomException("Giriş yapılamadı");
+                throw new CustomException("Login failed");
             }
             
         }
@@ -71,11 +71,13 @@ namespace SHFTGRAM.UserManager
             };
             return claims;
         }
-        public string GetUserId()
+        public Guid GetUserId()
         {
-            if (httpContext.User is not null)
+            var token = GetUserAccessToken();
+            if (!string.IsNullOrEmpty(token))
             {
-                return httpContext.User.Claims.First(c => c.Type == "UserId").Value;
+                var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                return Guid.Parse(jwt.Claims.First(c => c.Type == ClaimTypes.Name).Value);
             }
             else
             {
@@ -85,20 +87,20 @@ namespace SHFTGRAM.UserManager
 
         public string GetUserAccessToken()
         {
-            if(httpContext.User is not null)
+            if (httpContext.Request.Headers.TryGetValue("Authorization", out var headerAuth))
             {
-               return httpContext.User.Claims.First(c => c.Type == "AccessToken").Value;
+                var jwtToken = headerAuth.First().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1];
+                return jwtToken;
             }
-            else
-            {
-                throw new CustomException("User not found");
-            }
+            return string.Empty;
         }
-        public async Task<string> GetUserName()
+        public string GetUserName()
         {
-            if (httpContext.User is not null)
+            var token = GetUserAccessToken();
+            if (!string.IsNullOrEmpty(token))
             {
-                return httpContext.User.Claims.First(c => c.Type == "Username").Value;
+                var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                return jwt.Claims.First(c => c.Type == "UserName").Value;
             }
             else
             {

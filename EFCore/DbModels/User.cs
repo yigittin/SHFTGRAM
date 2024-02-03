@@ -28,9 +28,11 @@ namespace EFCore.DbModels
         public Guid RoleId { get; set; }
         public bool IsDeleted { get; set; }
         public Guid ConfirmationGuid { get; set; }
-        public double PointAverage { get; set; }
-        public int PointCount { get; set; }
-        public long TotalPoint { get; set; }
+        public string? BioText { get; set; }
+        public string? ProfilePicture { get; set; }
+        public ICollection<Post> Posts{ get; set; }
+        public int FollowerCount { get; set; }
+        public int FollowingCount { get; set; }
 
     }
 }

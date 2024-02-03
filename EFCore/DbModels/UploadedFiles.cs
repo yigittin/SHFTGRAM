@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EFCore.DbModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SHFTGRAMAPP.EFCore.DbModels
 {
-    public class UploadedFiles:ModelNoLang
+    public class UploadedFiles:BaseEntity
     {
         public string OldFileName { get; set; }
         public string FileName { get; set; }

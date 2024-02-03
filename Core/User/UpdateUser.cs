@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.User
+namespace Core.User
 {
-    public class UserData
+    public class UpdateUser
     {
-        public Guid UserId { get; set; }
-        public string UserName { get; set; }
+        public string BioText { get; set; }
+        public string Phone { get; set; }
     }
 }

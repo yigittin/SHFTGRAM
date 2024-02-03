@@ -15,8 +15,16 @@ namespace EFCore
         public DbSet<RoleType> RoleTypes { get; set; }
         public DbSet<UserActionType> UserActionTypes { get; set; }
         public DbSet<UploadedFiles> Files { get; set; }
+        public DbSet<Post> Posts{ get; set; }
+        public DbSet<Likes> Likes{ get; set; }
+        public DbSet<Follow> Follows{ get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var customUser1 = Guid.NewGuid();
+            var customUser2 = Guid.NewGuid();
+
+
             modelBuilder.Entity<RoleType>().HasData(
                 new RoleType()
                 {
@@ -43,7 +51,7 @@ namespace EFCore
             modelBuilder.Entity<User>().HasData(
                 new User()
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = customUser1,
                     Email = "i.yigittin@hotmail.com",
                     IsConfirmed = true,
                     IsDeleted = false,
@@ -59,9 +67,68 @@ namespace EFCore
                     Surname = "Tın",
                     UserName = "i.yigittin@hotmail.com",
                     WrongPasswordCount = 0,
-                    PointAverage = 0,
-                    PointCount = 0,
-                    TotalPoint = 0
+                    FollowerCount=1,
+                    FollowingCount=1
+
+                },
+                new User()
+                {
+                    UserId = customUser2,
+                    Email = "test@test",
+                    IsConfirmed = true,
+                    IsDeleted = false,
+                    IsLocked = false,
+                    LastActivateDate = DateTime.Now,
+                    LastLogin = DateTime.MinValue,
+                    LastPasswordResetDate = DateTime.MinValue,
+                    Name = "Test User",
+                    Password = "+XLIphBpHWTKXJL0co5lySTbhS0=",
+                    Phone = "5395954339",
+                    RegisterDate = DateTime.Now,
+                    RoleId = Guid.Parse("567ceb59-3058-40ed-8999-f095202939c8"),
+                    Surname = "Shft",
+                    UserName = "test@test",
+                    WrongPasswordCount = 0,
+                    FollowerCount = 1,
+                    FollowingCount = 1
+                });
+            modelBuilder.Entity<Follow>().HasData(
+                new Follow()
+                {
+                    Id=1,
+                    FollowerId=customUser1,
+                    FollowingId=customUser2,
+                },
+                new Follow()
+                {
+                    Id=2,
+                    FollowerId = customUser2,
+                    FollowingId = customUser1,
+                });
+            modelBuilder.Entity<Post>().HasData(
+                new Post()
+                {
+                    CreatedBy="seeder",
+                    CreateTime=DateTime.Now,
+                    Id=1,
+                    IsDeleted=false,
+                    LikeCount=0,
+                    ModifiedBy="seeder",
+                    ModifiedTime=DateTime.Now,
+                    Text="SHFTGRAM IS ONLINE",
+                    UserId=customUser1
+                },
+                new Post()
+                {
+                    CreatedBy = "seeder",
+                    CreateTime = DateTime.Now,
+                    Id = 2,
+                    IsDeleted = false,
+                    LikeCount = 0,
+                    ModifiedBy = "seeder",
+                    ModifiedTime = DateTime.Now,
+                    Text = "FEEL FREE TO EXPLORE",
+                    UserId = customUser2
                 });
         }
     }

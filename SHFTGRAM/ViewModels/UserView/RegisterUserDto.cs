@@ -4,17 +4,11 @@ namespace SHFTGRAMAPP.ViewModels.User
 {
     public class RegisterUserDto
     {
-        [JsonPropertyName("username")]
-        public string UserName{ get; set; }
-        [JsonPropertyName("password")]
+        public string UserName { get; set; }
         public string Password { get; set; }
-        [JsonPropertyName("email")]
-        public string Email{ get; set; }
-        [JsonPropertyName("name")]
+        public string Email { get; set; }
         public string Name { get; set; }
-        [JsonPropertyName("surname")]
         public string Surname { get; set; }
-        [JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; }
     }
 }

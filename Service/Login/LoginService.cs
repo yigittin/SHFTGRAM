@@ -88,7 +88,6 @@ namespace Service.Login
                                         new Claim(ClaimTypes.Name, user.UserId.ToString()),
                                         new Claim("UserName", user.UserName),
                                         new Claim(ClaimTypes.Role, role),
-                                        new Claim("Confirmed",user.IsConfirmed.ToString()),
                                         new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
                                     };
             var token = new JwtSecurityToken(
@@ -114,8 +113,7 @@ namespace Service.Login
                     await sqlConnection.OpenAsync();
                     string sSQL = @$"SELECT 
 	                                    UserId,
-	                                    UserName,
-                                        IsConfirmed
+	                                    UserName
                                     FROM
 	                                    dbo.Users
                                     WHERE
@@ -129,7 +127,6 @@ namespace Service.Login
                     {
                         user.UserId = Guid.Parse(reader["UserId"].ToString());
                         user.UserName = reader["UserName"].ToString();
-                        user.IsConfirmed = Convert.ToBoolean(reader["IsConfirmed"]);
                     }
                     await reader.CloseAsync();
                     await sqlConnection.CloseAsync();
@@ -199,7 +196,7 @@ namespace Service.Login
             var valKey = _configs.GetSection("MachineKey:validationKey").Value;
             var encodedPass = EncodePassword(user.UserName.ToLowerInvariant() + user.Password, valKey);
             var confirmCode = Guid.NewGuid();
-            User newUser = new User()
+            EFCore.DbModels.User newUser = new EFCore.DbModels.User()
             {
                 Email = user.Email,
                 UserName = user.UserName,
@@ -208,15 +205,14 @@ namespace Service.Login
                 ConfirmationGuid = confirmCode,
                 IsDeleted = false,
                 IsLocked = false,
-                RoleId = Guid.Parse("e7d374ce-f8e5-42e6-89fd-d76565f1df02"),
+                RoleId = Guid.Parse("567ceb59-3058-40ed-8999-f095202939c8"),
                 Name = user.Name,
                 Surname = user.Surname,
                 WrongPasswordCount = 0,
                 Phone = user.PhoneNumber,
                 RegisterDate = DateTime.Now,
-                TotalPoint=0,
-                PointCount=0,
-                PointAverage=0,
+                FollowerCount = 0,
+                FollowingCount = 0
             };
             _context.Add(newUser);
             await _context.SaveChangesAsync();

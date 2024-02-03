@@ -9,40 +9,30 @@ using SHFTGRAMAPP.ViewModels.User;
 namespace SHFTGRAM.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class LoginController : Controller
     {
         private IConfiguration _configs;
         private readonly ILoginService _loginService;
         private readonly IMapper _mapper;
-        public LoginController(IConfiguration configuration, ILoginService loginService)
+        public LoginController(IConfiguration configuration, ILoginService loginService, IMapper mapper)
         {
             _configs = configuration;
             _loginService = loginService;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
         [HttpPost("Login")]
-        public async Task<ActionResult<BaseResult<UserTokenDto>>> Login([FromBody] UserLoginDto userLogin)
+        public async Task<ActionResult<BaseResult<UserToken>>> Login([FromBody] UserLoginDto userLogin)
         {
             try
             {
                 var userData = await _loginService.Login(userLogin.UserName, userLogin.Password);
                 if (userData is null)
                 {
-                    return NotFound(new ResponseResult("Kullanıcı bulunamadı",false));
+                    return NotFound(new ResponseResult("User not found",false));
                 }
-                var userDataDto = _mapper.Map<UserDto>(userData.UserData);
-                var userToken = new UserTokenDto()
-                {
-                    AccessToken = userData.AccessToken,
-                    Role = userData.Role,
-                    UserData = userDataDto
-                };
-                return Ok(new BaseResult<UserTokenDto>("Giriş yapıldı", userToken));
+                return Ok(new BaseResult<UserToken>("Login Success", userData));
             }
             catch (NotFoundException ex)
             {
@@ -54,7 +44,7 @@ namespace SHFTGRAM.Controllers
             }
         }
         [HttpPost("Register")]
-        public async Task<ActionResult<BaseResult<UserTokenDto>>> Register([FromBody] RegisterUserDto user)
+        public async Task<ActionResult<BaseResult<UserTokenDto>>> Register(RegisterUserDto user)
         {
             try
             {
@@ -67,7 +57,7 @@ namespace SHFTGRAM.Controllers
                     Role = rez.Role,
                     UserData = userDataDto
                 };
-                return Ok(new BaseResult<UserTokenDto>("Kayıt yapıldı", userToken));
+                return Ok(new BaseResult<UserTokenDto>("Register Success", userToken));
             }
             catch (NotFoundException ex)
             {
