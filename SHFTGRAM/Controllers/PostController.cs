@@ -132,5 +132,28 @@ namespace SHFTGRAM.Controllers
                 return BadRequest(new ResponseResult("Update failed : " + ex.Message, false));
             }
         }
+        [HttpPost("LikePost")]
+        public async Task<ActionResult<ResponseResult>> LikePost(int id)
+        {
+            try
+            {
+                var userManager = new UserManager.UserManager(HttpContext, _configs, _loginService);
+                var userId = userManager.GetUserId();
+                await _postService.LikePost(id, userId);
+                return Ok(new ResponseResult("Like success", true));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new ResponseResult(ex.Message, false));
+            }
+            catch (CustomException ex)
+            {
+                return BadRequest(new ResponseResult(ex.Message, false));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult("Like failed : " + ex.Message, false));
+            }
+        }
     }
 }
