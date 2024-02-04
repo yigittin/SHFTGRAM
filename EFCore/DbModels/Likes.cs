@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace EFCore.DbModels
 {
-    [Keyless]
     public class Likes
     {
+        public int Id { get; set; }
         public int PostId { get; set; }
         public Guid UserId { get; set; }
     }

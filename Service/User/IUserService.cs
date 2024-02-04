@@ -1,4 +1,5 @@
 ﻿using Core.User;
+using EFCore.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,8 @@ namespace Service.User
         public Task UnFollow(Guid userId, Guid followedUserId);
         public Task<List<EFCore.DbModels.User>> SearchUsers(string search);
         public Task<string> GetUserName(Guid id);
+        public Task<List<Follow>> GetFollowers(Guid id);
+        public Task<List<Follow>> GetFollowing(Guid id);
+        public Task<bool> CheckFollow(Guid id, Guid userId);
     }
 }

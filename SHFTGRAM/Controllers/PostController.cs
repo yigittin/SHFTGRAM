@@ -115,6 +115,8 @@ namespace SHFTGRAM.Controllers
         {
             try
             {
+                if (input.Id is null)
+                    input.Id = 0;
                 var userManager = new UserManager.UserManager(HttpContext, _configs, _loginService);
                 var res = await _postService.AddOrUpdatePost(_mapper.Map<Post>(input), userManager.GetUserId());
                 return Ok(new BaseResult<PostDto>("Update Success",_mapper.Map<PostDto>(res)));
@@ -133,7 +135,7 @@ namespace SHFTGRAM.Controllers
             }
         }
         [HttpPost("LikePost")]
-        public async Task<ActionResult<ResponseResult>> LikePost(int id)
+        public async Task<ActionResult<ResponseResult>> LikePost([FromBody] int id)
         {
             try
             {

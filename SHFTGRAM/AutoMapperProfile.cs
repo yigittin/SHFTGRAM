@@ -17,11 +17,14 @@ namespace SHFTGRAM
             CreateMap<UserLogin, UserLoginDto>().ReverseMap();
             CreateMap<UserData, UserDto>().ReverseMap();
             CreateMap<UserToken, UserTokenDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
             CreateMap<RegisterUser, RegisterUserDto>().ReverseMap();
             CreateMap<UserComment, UserCommentDto>().ReverseMap();
             CreateMap<UpdateUser, UpdateUserDto>().ReverseMap();
             CreateMap<User, UserPageDto>().ReverseMap();
             CreateMap<Post, PostDto>().ReverseMap();
+            CreateMap<Post, AddOrUpdatePostDto>().ReverseMap();
+            CreateMap<Follow, FollowDto>().ReverseMap();
         }
     }
 }

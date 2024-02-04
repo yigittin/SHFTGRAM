@@ -61,7 +61,7 @@ namespace Service.Post
                 else
                 {
                     var oldPost = await _context.Posts.Where(x => x.Id == post.Id && x.IsDeleted == false && x.UserId == userId).FirstOrDefaultAsync()?? throw new NotFoundException("Post");
-                    if (post.UserId != userId)
+                    if (oldPost.UserId != userId)
                         throw new CustomException("Something went wrong");
                     oldPost.Text = post.Text;
                     oldPost.ModifiedBy = user.UserName;
@@ -80,7 +80,7 @@ namespace Service.Post
         {
             try
             {                
-                var post = await _context.Posts.Where(x => x.Id == id&&x.IsDeleted==false&&x.UserId==userId).FirstOrDefaultAsync()??throw new NotFoundException("Post");
+                var post = await _context.Posts.Where(x => x.Id == id&&x.IsDeleted==false).FirstOrDefaultAsync()??throw new NotFoundException("Post");
                 var user=await _context.Users.Where(x=>x.UserId==userId&&x.IsDeleted==false).FirstOrDefaultAsync()?? throw new NotFoundException("User");
                 var isLiked = await _context.Likes.Where(x => x.UserId == userId && x.PostId == post.Id).FirstOrDefaultAsync();
                 if (isLiked is not null)
@@ -93,7 +93,7 @@ namespace Service.Post
                 };
                 post.LikeCount++;
 
-                await _context.AddAsync(post);
+                await _context.AddAsync(newLike);
                 await _context.SaveChangesAsync();
                 return post;
 

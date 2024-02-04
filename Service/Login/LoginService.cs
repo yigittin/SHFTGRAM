@@ -208,6 +208,7 @@ namespace Service.Login
                 RoleId = Guid.Parse("567ceb59-3058-40ed-8999-f095202939c8"),
                 Name = user.Name,
                 Surname = user.Surname,
+                BioText="",
                 WrongPasswordCount = 0,
                 Phone = user.PhoneNumber,
                 RegisterDate = DateTime.Now,

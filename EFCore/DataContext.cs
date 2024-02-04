@@ -60,6 +60,7 @@ namespace EFCore
                     LastLogin = DateTime.MinValue,
                     LastPasswordResetDate = DateTime.MinValue,
                     Name = "İbrahim Yiğit",
+                    BioText = "BIO TEXT",
                     Password = "+XLIphBpHWTKXJL0co5lySTbhS0=",
                     Phone = "5395954339",
                     RegisterDate = DateTime.Now,
@@ -82,6 +83,7 @@ namespace EFCore
                     LastLogin = DateTime.MinValue,
                     LastPasswordResetDate = DateTime.MinValue,
                     Name = "Test User",
+                    BioText = "BIO TEXT",
                     Password = "+XLIphBpHWTKXJL0co5lySTbhS0=",
                     Phone = "5395954339",
                     RegisterDate = DateTime.Now,
@@ -97,20 +99,24 @@ namespace EFCore
                 {
                     Id=1,
                     FollowerId=customUser1,
-                    FollowingId=customUser2,
+                    FollowerUserName= "i.yigittin@hotmail.com",
+                    FollowingId =customUser2,
+                    FollowingUserName= "test@test"
                 },
                 new Follow()
                 {
                     Id=2,
                     FollowerId = customUser2,
+                    FollowerUserName = "test@test",
                     FollowingId = customUser1,
+                    FollowingUserName = "i.yigittin@hotmail.com"
                 });
             modelBuilder.Entity<Post>().HasData(
                 new Post()
                 {
                     CreatedBy="seeder",
                     CreateTime=DateTime.Now,
-                    Id=1,
+                    Id=3,
                     IsDeleted=false,
                     LikeCount=0,
                     ModifiedBy="seeder",
@@ -122,7 +128,7 @@ namespace EFCore
                 {
                     CreatedBy = "seeder",
                     CreateTime = DateTime.Now,
-                    Id = 2,
+                    Id = 4,
                     IsDeleted = false,
                     LikeCount = 0,
                     ModifiedBy = "seeder",

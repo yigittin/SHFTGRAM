@@ -32,7 +32,9 @@ namespace Service.User
                     throw new NotFoundException("User");
                 updateUser.BioText = user.BioText;
                 updateUser.Phone = user.Phone;
-
+                updateUser.Email = user.Email;
+                updateUser.Name = user.Name;
+                updateUser.Surname = user.SurName;
                 await _context.SaveChangesAsync();
                 return updateUser;
             }
@@ -84,7 +86,9 @@ namespace Service.User
                 var follower = new Follow()
                 {
                     FollowerId=userId,
-                    FollowingId=followedUserId
+                    FollowerUserName=user.UserName,
+                    FollowingId=followedUserId,
+                    FollowingUserName=followedUser.UserName,
                 };
                 await _context.AddAsync(follower);
                 followedUser.FollowerCount++;
@@ -128,6 +132,46 @@ namespace Service.User
         {
             var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
             return user.UserName;
+        }
+        public async Task<List<Follow>> GetFollowers(Guid id)
+        {
+            try
+            {
+                var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
+                return await _context.Follows.Where(x=>x.FollowingId == id).ToListAsync();
+            }catch(Exception ex)
+            {
+                throw new CustomException("Something went wrong : " + ex.Message);
+            }
+        }
+        public async Task<List<Follow>> GetFollowing(Guid id)
+        {
+            try
+            {
+                var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
+                return await _context.Follows.Where(x => x.FollowerId == id).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new CustomException("Something went wrong : " + ex.Message);
+            }
+        }
+        public async Task<bool> CheckFollow(Guid id,Guid userId)
+        {
+            try
+            {
+                var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
+                var followAcc = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
+                var isFollow=await _context.Follows.Where(x => x.FollowerId == userId && x.FollowingId == id).FirstOrDefaultAsync();
+                if (isFollow is not null)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomException("Something went wrong : " + ex.Message);
+            }
         }
     }
 }

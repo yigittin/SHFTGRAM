@@ -61,7 +61,7 @@ namespace SHFTGRAM.Controllers
             }
         }
         [HttpPost("Follow")]
-        public async Task<ActionResult<ResponseResult>> FollowUser(Guid id)
+        public async Task<ActionResult<ResponseResult>> FollowUser([FromBody]Guid id)
         {
             try
             {
@@ -69,6 +69,29 @@ namespace SHFTGRAM.Controllers
                 var userId = userService.GetUserId();
                 await _userService.Follow(userId, id);
                 return Ok(new ResponseResult("Followed", true));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new ResponseResult(ex.Message, false));
+            }
+            catch (CustomException ex)
+            {
+                return BadRequest(new ResponseResult(ex.Message, false));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult("Update failed : " + ex.Message, false));
+            }
+        }
+        [HttpPost("Unfollow")]
+        public async Task<ActionResult<ResponseResult>> UnfollowUser(Guid id)
+        {
+            try
+            {
+                var userService = new UserManager.UserManager(HttpContext, _configs, _loginService);
+                var userId = userService.GetUserId();
+                await _userService.UnFollow(userId, id);
+                return Ok(new ResponseResult("Unfollowed", true));
             }
             catch (NotFoundException ex)
             {
@@ -107,6 +130,9 @@ namespace SHFTGRAM.Controllers
                 }
                 else
                 {
+                    var userManager = new UserManager.UserManager(HttpContext, _configs, _loginService);
+                    var userId = userManager.GetUserId();
+                    var username = userManager.GetUserName();
                     var userInfo = _mapper.Map<UserDto>(await _userService.GetUserPage((Guid)id));
                     var posts = new List<PostDto>();
                     var postData = await _postService.GetUserPosts((Guid)id);
@@ -117,6 +143,7 @@ namespace SHFTGRAM.Controllers
                         posts.Add(singlePost);
                     }
                     userInfo.Posts = posts;
+                    userInfo.IsFollowed = await _userService.CheckFollow((Guid)id, userId);
                     return Ok(new BaseResult<UserDto>("User information success", userInfo));
                 }
             }
@@ -157,6 +184,96 @@ namespace SHFTGRAM.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new ResponseResult("Search failed : " + ex.Message, false));
+            }
+        }
+        [HttpGet("GetFollowers")]
+        public async Task<ActionResult<BaseResult<List<FollowDto>>>> GetFollowers(Guid? id)
+        {
+            try
+            {
+                if (id is null)
+                {
+                    var userManager = new UserManager.UserManager(HttpContext, _configs, _loginService);
+                    var userId = userManager.GetUserId();
+                    var followers = await _userService.GetFollowers(userId);
+                    var followersList = new List<FollowDto>();  
+                    foreach(var item in followers)
+                    {
+                        followersList.Add(_mapper.Map<FollowDto>(item));
+                    }
+                    return Ok(new BaseResult<List<FollowDto>>("User information success", followersList));
+                }
+                else if(id is not null)
+                {
+                    var followers = await _userService.GetFollowers((Guid)id);
+                    var followersList = new List<FollowDto>();
+                    foreach (var item in followers)
+                    {
+                        followersList.Add(_mapper.Map<FollowDto>(item));
+                    }
+                    return Ok(new BaseResult<List<FollowDto>>("User information success", followersList));
+                }
+                else
+                {
+                    return BadRequest(new ResponseResult("No Id Gathered",false));
+                }
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new ResponseResult(ex.Message, false));
+            }
+            catch (CustomException ex)
+            {
+                return BadRequest(new ResponseResult(ex.Message, false));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult("Update failed : " + ex.Message, false));
+            }
+        }
+        [HttpGet("GetFollowings")]
+        public async Task<ActionResult<BaseResult<List<FollowDto>>>> GetFollows(Guid? id)
+        {
+            try
+            {
+                if (id is null)
+                {
+                    var userManager = new UserManager.UserManager(HttpContext, _configs, _loginService);
+                    var userId = userManager.GetUserId();
+                    var followers = await _userService.GetFollowing(userId);
+                    var followersList = new List<FollowDto>();
+                    foreach (var item in followers)
+                    {
+                        followersList.Add(_mapper.Map<FollowDto>(item));
+                    }
+                    return Ok(new BaseResult<List<FollowDto>>("User information success", followersList));
+                }
+                else if (id is not null)
+                {
+                    var followers = await _userService.GetFollowing((Guid)id);
+                    var followersList = new List<FollowDto>();
+                    foreach (var item in followers)
+                    {
+                        followersList.Add(_mapper.Map<FollowDto>(item));
+                    }
+                    return Ok(new BaseResult<List<FollowDto>>("User information success", followersList));
+                }
+                else
+                {
+                    return BadRequest(new ResponseResult("No Id Gathered", false));
+                }
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new ResponseResult(ex.Message, false));
+            }
+            catch (CustomException ex)
+            {
+                return BadRequest(new ResponseResult(ex.Message, false));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult("Update failed : " + ex.Message, false));
             }
         }
     }
