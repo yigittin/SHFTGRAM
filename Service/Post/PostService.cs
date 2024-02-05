@@ -34,8 +34,10 @@ namespace Service.Post
                         postList.InsertRange(0,postTopFive);
                 }
                 var userLastPost = await _context.Posts.Where(x => x.UserId == userId).OrderByDescending(x => x.CreateTime).Take(1).FirstOrDefaultAsync();
-                if(userLastPost is not null)
+                var userOtherPosts = await _context.Posts.Where(x => x.UserId == userId).OrderByDescending(x => x.CreateTime).Take(5).Skip(1).ToListAsync();
+                if (userLastPost is not null)
                     postList.Insert(0,userLastPost);
+                postList.AddRange(userOtherPosts);
                 return postList;
             }catch(Exception ex)
             {

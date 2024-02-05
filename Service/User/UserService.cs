@@ -133,23 +133,23 @@ namespace Service.User
             var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
             return user.UserName;
         }
-        public async Task<List<Follow>> GetFollowers(Guid id)
-        {
-            try
-            {
-                var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
-                return await _context.Follows.Where(x=>x.FollowingId == id).ToListAsync();
-            }catch(Exception ex)
-            {
-                throw new CustomException("Something went wrong : " + ex.Message);
-            }
-        }
         public async Task<List<Follow>> GetFollowing(Guid id)
         {
             try
             {
                 var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
-                return await _context.Follows.Where(x => x.FollowerId == id).ToListAsync();
+                return await _context.Follows.Where(x=>x.FollowerId == id).ToListAsync();
+            }catch(Exception ex)
+            {
+                throw new CustomException("Something went wrong : " + ex.Message);
+            }
+        }
+        public async Task<List<Follow>> GetFollowers(Guid id)
+        {
+            try
+            {
+                var user = await _context.Users.Where(x => x.UserId == id && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
+                return await _context.Follows.Where(x => x.FollowingId == id).ToListAsync();
             }
             catch (Exception ex)
             {

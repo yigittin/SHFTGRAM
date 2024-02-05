@@ -56,6 +56,10 @@ namespace SHFTGRAM.Controllers
                 return BadRequest(new ResponseResult("Update failed : " + ex.Message, false));
             }
         }
+
+        //KULLANICININ SON PAYLAŞTIĞINI İLK POST OLARAK ALIR
+        //TAKİP ETTİĞİ KULLANICILARIN SON 5 POSTUNU LİSTEYE ALIR
+        //KULLANCININ SON PAYLAŞIMINDAN SONRAKİ 5 PAYLAŞIMI LİSTENİN SONUNA EKLER
         [HttpGet("GetHomePage")]
         public async Task<ActionResult<BaseResult<List<PostDto>>>> GetHomePage()
         {
@@ -110,6 +114,8 @@ namespace SHFTGRAM.Controllers
                 return BadRequest(new ResponseResult("Update failed : " + ex.Message, false));
             }
         }
+        //GELEN ID 0 OLMASI DURUMUNDA YENİ POST OLUŞTURUR
+        //ID GEÇERLİ BİR POST ID İSE BUNU DÜZENLER
         [HttpPost("AddOrUpdatePost")]
         public async Task<ActionResult<BaseResult<PostDto>>> AddOrUpdatePost(AddOrUpdatePostDto input)
         {

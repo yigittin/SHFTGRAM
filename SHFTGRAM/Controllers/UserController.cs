@@ -84,7 +84,7 @@ namespace SHFTGRAM.Controllers
             }
         }
         [HttpPost("Unfollow")]
-        public async Task<ActionResult<ResponseResult>> UnfollowUser(Guid id)
+        public async Task<ActionResult<ResponseResult>> UnfollowUser([FromBody] Guid id)
         {
             try
             {
