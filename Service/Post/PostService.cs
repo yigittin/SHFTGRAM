@@ -29,12 +29,12 @@ namespace Service.Post
                 var postList=new List<EFCore.DbModels.Post>();
                 foreach(var f in followers)
                 {
-                    var postTopFive=await _context.Posts.Where(x=>x.UserId==f.FollowerId).OrderByDescending(x=>x.CreateTime).Take(5).ToListAsync();
+                    var postTopFive=await _context.Posts.Where(x=>x.UserId==f.FollowerId&& x.IsDeleted == false).OrderByDescending(x=>x.CreateTime).Take(5).ToListAsync();
                     if(postTopFive.Count>0)
                         postList.InsertRange(0,postTopFive);
                 }
-                var userLastPost = await _context.Posts.Where(x => x.UserId == userId).OrderByDescending(x => x.CreateTime).Take(1).FirstOrDefaultAsync();
-                var userOtherPosts = await _context.Posts.Where(x => x.UserId == userId).OrderByDescending(x => x.CreateTime).Take(5).Skip(1).ToListAsync();
+                var userLastPost = await _context.Posts.Where(x => x.UserId == userId&&x.IsDeleted==false).OrderByDescending(x => x.CreateTime).Take(1).FirstOrDefaultAsync();
+                var userOtherPosts = await _context.Posts.Where(x => x.UserId == userId&& x.IsDeleted == false).OrderByDescending(x => x.CreateTime).Take(5).Skip(1).ToListAsync();
                 if (userLastPost is not null)
                     postList.Insert(0,userLastPost);
                 postList.AddRange(userOtherPosts);
@@ -112,7 +112,7 @@ namespace Service.Post
                 var user=await _context.Users.Where(x=>x.UserId==userId&&x.IsDeleted==false).FirstOrDefaultAsync();
                 if(user is null)
                     throw new NotFoundException("User");
-                return await _context.Posts.Where(x => x.UserId == userId && x.IsDeleted == false).ToListAsync();
+                return await _context.Posts.Where(x => x.UserId == userId && x.IsDeleted == false).OrderByDescending(x=>x.CreateTime).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -131,7 +131,7 @@ namespace Service.Post
                 var user= await _context.Users.Where(x => x.UserId == userId && x.IsDeleted == false).FirstOrDefaultAsync() ?? throw new NotFoundException("User");
                 if (post.UserId != user.UserId)
                     throw new CustomException("Something went wrong");
-                post.IsDeleted = false;
+                post.IsDeleted = true;
                 post.ModifiedBy = user.UserName;
                 post.ModifiedTime=DateTime.Now;
                 await _context.SaveChangesAsync();
