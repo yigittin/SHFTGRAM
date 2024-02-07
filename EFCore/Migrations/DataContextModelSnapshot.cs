@@ -52,17 +52,17 @@ namespace EFCore.Migrations
                         new
                         {
                             Id = 1,
-                            FollowerId = new Guid("551b9b2d-dacb-4603-b3cc-405ba09b8210"),
+                            FollowerId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433"),
                             FollowerUserName = "i.yigittin@hotmail.com",
-                            FollowingId = new Guid("c6a46743-146b-469e-ad3f-26b74b80e6c0"),
+                            FollowingId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4"),
                             FollowingUserName = "test@test"
                         },
                         new
                         {
                             Id = 2,
-                            FollowerId = new Guid("c6a46743-146b-469e-ad3f-26b74b80e6c0"),
+                            FollowerId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4"),
                             FollowerUserName = "test@test",
-                            FollowingId = new Guid("551b9b2d-dacb-4603-b3cc-405ba09b8210"),
+                            FollowingId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433"),
                             FollowingUserName = "i.yigittin@hotmail.com"
                         });
                 });
@@ -131,26 +131,26 @@ namespace EFCore.Migrations
                         new
                         {
                             Id = 3,
-                            CreateTime = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5721),
+                            CreateTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7762),
                             CreatedBy = "seeder",
                             IsDeleted = false,
                             LikeCount = 0,
                             ModifiedBy = "seeder",
-                            ModifiedTime = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5722),
+                            ModifiedTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7764),
                             Text = "SHFTGRAM IS ONLINE",
-                            UserId = new Guid("551b9b2d-dacb-4603-b3cc-405ba09b8210")
+                            UserId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433")
                         },
                         new
                         {
                             Id = 4,
-                            CreateTime = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5723),
+                            CreateTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7765),
                             CreatedBy = "seeder",
                             IsDeleted = false,
                             LikeCount = 0,
                             ModifiedBy = "seeder",
-                            ModifiedTime = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5724),
+                            ModifiedTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7766),
                             Text = "FEEL FREE TO EXPLORE",
-                            UserId = new Guid("c6a46743-146b-469e-ad3f-26b74b80e6c0")
+                            UserId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4")
                         });
                 });
 
@@ -297,7 +297,7 @@ namespace EFCore.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("551b9b2d-dacb-4603-b3cc-405ba09b8210"),
+                            UserId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433"),
                             BioText = "BIO TEXT",
                             ConfirmationGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             Email = "i.yigittin@hotmail.com",
@@ -306,13 +306,13 @@ namespace EFCore.Migrations
                             IsConfirmed = true,
                             IsDeleted = false,
                             IsLocked = false,
-                            LastActivateDate = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5692),
+                            LastActivateDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7719),
                             LastLogin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastPasswordResetDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "İbrahim Yiğit",
                             Password = "+XLIphBpHWTKXJL0co5lySTbhS0=",
                             Phone = "5395954339",
-                            RegisterDate = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5700),
+                            RegisterDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7730),
                             RoleId = new Guid("567ceb59-3058-40ed-8999-f095202939c8"),
                             Surname = "Tın",
                             UserName = "i.yigittin@hotmail.com",
@@ -320,7 +320,7 @@ namespace EFCore.Migrations
                         },
                         new
                         {
-                            UserId = new Guid("c6a46743-146b-469e-ad3f-26b74b80e6c0"),
+                            UserId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4"),
                             BioText = "BIO TEXT",
                             ConfirmationGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             Email = "test@test",
@@ -329,13 +329,13 @@ namespace EFCore.Migrations
                             IsConfirmed = true,
                             IsDeleted = false,
                             IsLocked = false,
-                            LastActivateDate = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5703),
+                            LastActivateDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7732),
                             LastLogin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastPasswordResetDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Test User",
                             Password = "+XLIphBpHWTKXJL0co5lySTbhS0=",
                             Phone = "5395954339",
-                            RegisterDate = new DateTime(2024, 2, 4, 19, 45, 54, 261, DateTimeKind.Local).AddTicks(5703),
+                            RegisterDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7733),
                             RoleId = new Guid("567ceb59-3058-40ed-8999-f095202939c8"),
                             Surname = "Shft",
                             UserName = "test@test",
