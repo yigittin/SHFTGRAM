@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240204151300_LikeFix")]
-    partial class LikeFix
+    [Migration("20240207103833_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,8 +35,16 @@ namespace EFCore.Migrations
                     b.Property<Guid>("FollowerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("FollowerUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("FollowingId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FollowingUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -46,14 +54,18 @@ namespace EFCore.Migrations
                         new
                         {
                             Id = 1,
-                            FollowerId = new Guid("3bf99286-974e-432f-9bcb-af4a34ff42d2"),
-                            FollowingId = new Guid("5b302cb7-8011-4484-ba21-f187eb582f61")
+                            FollowerId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433"),
+                            FollowerUserName = "i.yigittin@hotmail.com",
+                            FollowingId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4"),
+                            FollowingUserName = "test@test"
                         },
                         new
                         {
                             Id = 2,
-                            FollowerId = new Guid("5b302cb7-8011-4484-ba21-f187eb582f61"),
-                            FollowingId = new Guid("3bf99286-974e-432f-9bcb-af4a34ff42d2")
+                            FollowerId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4"),
+                            FollowerUserName = "test@test",
+                            FollowingId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433"),
+                            FollowingUserName = "i.yigittin@hotmail.com"
                         });
                 });
 
@@ -120,27 +132,27 @@ namespace EFCore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreateTime = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5943),
+                            Id = 3,
+                            CreateTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7762),
                             CreatedBy = "seeder",
                             IsDeleted = false,
                             LikeCount = 0,
                             ModifiedBy = "seeder",
-                            ModifiedTime = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5944),
+                            ModifiedTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7764),
                             Text = "SHFTGRAM IS ONLINE",
-                            UserId = new Guid("3bf99286-974e-432f-9bcb-af4a34ff42d2")
+                            UserId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433")
                         },
                         new
                         {
-                            Id = 2,
-                            CreateTime = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5945),
+                            Id = 4,
+                            CreateTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7765),
                             CreatedBy = "seeder",
                             IsDeleted = false,
                             LikeCount = 0,
                             ModifiedBy = "seeder",
-                            ModifiedTime = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5946),
+                            ModifiedTime = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7766),
                             Text = "FEEL FREE TO EXPLORE",
-                            UserId = new Guid("5b302cb7-8011-4484-ba21-f187eb582f61")
+                            UserId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4")
                         });
                 });
 
@@ -287,7 +299,8 @@ namespace EFCore.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("3bf99286-974e-432f-9bcb-af4a34ff42d2"),
+                            UserId = new Guid("e79cebb8-0457-4912-b7de-cd91083b9433"),
+                            BioText = "BIO TEXT",
                             ConfirmationGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             Email = "i.yigittin@hotmail.com",
                             FollowerCount = 1,
@@ -295,13 +308,13 @@ namespace EFCore.Migrations
                             IsConfirmed = true,
                             IsDeleted = false,
                             IsLocked = false,
-                            LastActivateDate = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5826),
+                            LastActivateDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7719),
                             LastLogin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastPasswordResetDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "İbrahim Yiğit",
                             Password = "+XLIphBpHWTKXJL0co5lySTbhS0=",
                             Phone = "5395954339",
-                            RegisterDate = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5836),
+                            RegisterDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7730),
                             RoleId = new Guid("567ceb59-3058-40ed-8999-f095202939c8"),
                             Surname = "Tın",
                             UserName = "i.yigittin@hotmail.com",
@@ -309,7 +322,8 @@ namespace EFCore.Migrations
                         },
                         new
                         {
-                            UserId = new Guid("5b302cb7-8011-4484-ba21-f187eb582f61"),
+                            UserId = new Guid("1c6aae66-4157-4433-b9cd-91fdf9d5dab4"),
+                            BioText = "BIO TEXT",
                             ConfirmationGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             Email = "test@test",
                             FollowerCount = 1,
@@ -317,13 +331,13 @@ namespace EFCore.Migrations
                             IsConfirmed = true,
                             IsDeleted = false,
                             IsLocked = false,
-                            LastActivateDate = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5838),
+                            LastActivateDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7732),
                             LastLogin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastPasswordResetDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Test User",
                             Password = "+XLIphBpHWTKXJL0co5lySTbhS0=",
                             Phone = "5395954339",
-                            RegisterDate = new DateTime(2024, 2, 4, 18, 12, 59, 883, DateTimeKind.Local).AddTicks(5839),
+                            RegisterDate = new DateTime(2024, 2, 7, 13, 38, 32, 956, DateTimeKind.Local).AddTicks(7733),
                             RoleId = new Guid("567ceb59-3058-40ed-8999-f095202939c8"),
                             Surname = "Shft",
                             UserName = "test@test",
