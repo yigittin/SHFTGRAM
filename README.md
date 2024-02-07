@@ -1,4 +1,4 @@
-This project build with react + vite.<br />
+This project build with .NET 6<br />
 To run this project after cloning follows this steps<br />
 
 -- Commands -- <br />
