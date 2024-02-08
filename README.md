@@ -3,7 +3,7 @@ To run this project after cloning follows this steps<br />
 
 -- Commands -- <br />
 cd .\EFCore<br />
-dotnet ef database update -s..\SHFTGRAM\SHFTGRAM.csproj<br />
+dotnet ef database update -s ..\SHFTGRAM\SHFTGRAM.csproj<br />
 
 Projects Schema<br />
 
